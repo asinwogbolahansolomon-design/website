@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGI GROW SERVICES</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #6d28d9;
+            --primary-dark: #4c1d95;
+            --primary-soft: #f3e8ff;
+            --accent: #a855f7;
+            --bg-light: #f8f5ff;
+            --bg-white: #ffffff;
+            --text-dark: #2d1b4f;
+            --text-muted: #5b4a7a;
+            --card-light: #ffffff;
+            --border-light: #e9ddff;
+            --dark-bg: #120d1f;
+            --dark-panel: #1c1630;
+            --dark-card: #201a2f;
+            --dark-border: #3a2f52;
+            --dark-text: #f5f3ff;
+            --shadow-soft: 0 12px 30px rgba(109, 40, 217, 0.12);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(168, 85, 247, 0.22), transparent 18%),
+                radial-gradient(circle at 85% 12%, rgba(251, 191, 36, 0.18), transparent 20%),
+                radial-gradient(circle at 50% 72%, rgba(244, 114, 182, 0.1), transparent 24%),
+                linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245, 239, 255, 0.98) 36%, rgba(249, 245, 255, 1) 100%);
+            transition: background 0.3s, color 0.3s;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 480px;
+            height: 480px;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.46;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            top: 80px;
+            left: -120px;
+            background: rgba(168, 85, 247, 0.65);
+        }
+
+        body::after {
+            right: -120px;
+            bottom: 80px;
+            background: rgba(251, 146, 60, 0.38);
+        }
+
+        body.dark {
+            background:
+                radial-gradient(circle at 12% 18%, rgba(168, 85, 247, 0.3), transparent 18%),
+                radial-gradient(circle at 82% 20%, rgba(34, 211, 238, 0.14), transparent 20%),
+                radial-gradient(circle at 50% 75%, rgba(244, 114, 182, 0.12), transparent 24%),
+                linear-gradient(135deg, rgba(18, 13, 31, 1) 0%, rgba(29, 18, 44, 1) 35%, rgba(16, 12, 24, 1) 100%);
+            color: var(--dark-text);
+        }
+
+        body.dark::before { background: rgba(168, 85, 247, 0.55); }
+        body.dark::after { background: rgba(45, 212, 191, 0.32); }
+        body.dark header {
+            background: linear-gradient(135deg, var(--primary-dark), #7c3aed);
+        }
+        body.dark .card,
+        body.dark .pricing-card,
+        body.dark .blog-post,
+        body.dark .testimonial,
+        body.dark .contact-option,
+        body.dark .dash-panel {
+            background: var(--dark-card);
+            border-color: var(--dark-border);
+            box-shadow: none;
+        }
+        body.dark footer {
+            background: linear-gradient(135deg, var(--primary-dark), #2e1065);
+        }
+        body.dark nav {
+            background: rgba(18, 13, 31, 0.92);
+            border-color: var(--dark-border);
+            backdrop-filter: blur(10px);
+        }
+        body.dark .testimonial,
+        body.dark .blog-post,
+        body.dark .contact-option,
+        body.dark .dash-panel,
+        body.dark .dash-tab {
+            color: var(--dark-text);
+        }
+        body.dark .section-title,
+        body.dark h3,
+        body.dark nav a,
+        body.dark .dark-toggle,
+        body.dark .contact-option a,
+        body.dark .dash-tab {
+            color: #d8b4fe;
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        #preloader div {
+            width: 54px;
+            height: 54px;
+            border: 6px solid var(--primary);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px rgba(109, 40, 217, 0.25);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(14px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 4px 18px rgba(109, 40, 217, 0.06);
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        nav a:hover { text-decoration: underline; }
+        .dark-toggle {
+            cursor: pointer;
+            font-size: 22px;
+            color: var(--primary);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 1s;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 80px 20px 100px;
+            box-shadow: inset 0 -10px 30px rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+        .hero-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-copy { text-align: left; }
+        header h1 {
+            font-size: clamp(2.6rem, 5vw, 4.3rem);
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            line-height: 1.05;
+        }
+        header p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.9);
+            max-width: 560px;
+        }
+        .btn {
+            background: white;
+            color: var(--primary);
+            padding: 12px 25px;
+            border-radius: 999px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            display: inline-block;
+        }
+        .btn:hover {
+            background: #f4ebff;
+            transform: translateY(-2px);
+        }
+        .hero-visual {
+            position: relative;
+            min-height: 360px;
+        }
+        .orbit {
+            position: absolute;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50%;
+            animation: floatOrb 8s ease-in-out infinite;
+        }
+        .orbit-one { width: 260px; height: 260px; right: 25px; top: 25px; }
+        .orbit-two { width: 320px; height: 320px; right: 0; top: 0; animation-delay: 1.5s; }
+        .mascot {
+            position: absolute;
+            right: 40px;
+            bottom: 10px;
+            width: 210px;
+            height: 210px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 38% 62% 52% 48% / 46% 42% 58% 54%;
+            box-shadow: 0 25px 40px rgba(35, 16, 71, 0.22);
+            backdrop-filter: blur(8px);
+            animation: bob 5s ease-in-out infinite;
+        }
+        .mascot .head {
+            position: absolute;
+            width: 96px;
+            height: 96px;
+            background: linear-gradient(180deg, #ffe3b3, #f6c27a);
+            border-radius: 50%;
+            left: 56px;
+            top: 40px;
+            border: 4px solid rgba(88, 42, 118, 0.35);
+        }
+        .mascot .eye {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #2d1b4f;
+            border-radius: 50%;
+            top: 44px;
+        }
+        .mascot .eye.left { left: 28px; }
+        .mascot .eye.right { right: 28px; }
+        .mascot .smile {
+            position: absolute;
+            width: 26px;
+            height: 16px;
+            border-bottom: 4px solid #854d2d;
+            border-radius: 0 0 20px 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px;
+        }
+        .mascot .body {
+            position: absolute;
+            width: 120px;
+            height: 84px;
+            background: linear-gradient(180deg, #f9a8d4, #ec4899);
+            border-radius: 35px;
+            left: 45px;
+            bottom: 22px;
+            border: 4px solid rgba(88, 42, 118, 0.2);
+        }
+        .mascot .arm {
+            position: absolute;
+            width: 18px;
+            height: 72px;
+            background: linear-gradient(180deg, #f7c98b, #e8a95d);
+            border-radius: 20px;
+            top: 108px;
+        }
+        .mascot .arm.left { left: 26px; transform: rotate(18deg); }
+        .mascot .arm.right { right: 26px; transform: rotate(-18deg); }
+        .floating-card {
+            position: absolute;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.28);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 20px 30px rgba(76, 29, 149, 0.2);
+            border-radius: 20px;
+            color: white;
+            padding: 12px 14px;
+            font-weight: 700;
+            animation: drift 8s ease-in-out infinite;
+        }
+        .card-growth { top: 30px; left: 10px; min-width: 118px; }
+        .card-stats { right: 0; bottom: 120px; min-width: 120px; animation-delay: 1s; }
+        .card-growth span, .card-stats span { display: block; font-size: 1.3rem; }
+        .card-growth small, .card-stats small { font-size: 0.72rem; opacity: 0.9; }
+        @keyframes bob {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(-2deg); }
+        }
+        @keyframes drift {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-10px) translateX(8px); }
+        }
+        @keyframes floatOrb {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.06) rotate(10deg); }
+        }
+
+        section {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .dashboard-shell {
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr);
+            gap: 22px;
+            align-items: start;
+            margin-top: 16px;
+        }
+        .dashboard-nav {
+            display: grid;
+            gap: 14px;
+            position: sticky;
+            top: 100px;
+        }
+        .dash-tab {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(243,232,255,0.95));
+            border: 1px solid var(--border-light);
+            color: var(--primary);
+            padding: 18px 16px;
+            border-radius: 18px;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            box-shadow: 0 10px 24px rgba(109, 40, 217, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .dash-tab::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(109, 40, 217, 0.02));
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .dash-tab:hover,
+        .dash-tab:focus-visible,
+        .dash-tab.active {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 18px 32px rgba(109, 40, 217, 0.16);
+            animation: bounceTab 0.45s ease;
+            background: linear-gradient(135deg, #f5e8ff, #ede9fe);
+        }
+        .dash-tab:hover::before,
+        .dash-tab.active::before { opacity: 1; }
+        .dash-tab span { position: relative; z-index: 1; }
+        .dashboard-panels { min-height: 420px; }
+        .dash-panel {
+            display: none;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid var(--border-light);
+            border-radius: 22px;
+            padding: 26px;
+            box-shadow: var(--shadow-soft);
+            animation: fadeInPanel 0.4s ease;
+        }
+        .dash-panel.active { display: block; }
+
+        .dashboard-visual {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 20px;
+            align-items: center;
+        }
+        .dashboard-image-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 22px;
+            min-height: 360px;
+            background: #f3e8ff;
+            box-shadow: 0 18px 36px rgba(109, 40, 217, 0.12);
+        }
+        .dashboard-image-wrap img {
+            width: 100%;
+            height: 100%;
+            min-height: 360px;
+            object-fit: cover;
+            display: block;
+            border-radius: 22px;
+        }
+        .dashboard-image-wrap::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(109, 40, 217, 0.18), rgba(0,0,0,0.12));
+        }
+        .dashboard-badge {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #ffffff, #f5e8ff);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 16px 30px rgba(109, 40, 217, 0.12);
+        }
+        .dashboard-badge span {
+            display: inline-block;
+            background: rgba(109, 40, 217, 0.1);
+            color: var(--primary);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+        .dashboard-badge h3 {
+            color: var(--primary-dark);
+            font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+            line-height: 1.1;
+            margin: 0 0 12px;
+        }
+        .dashboard-badge p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 1rem;
+        }
+        .about img {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--card-light);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: var(--shadow-soft);
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 30px rgba(109, 40, 217, 0.12);
+        }
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .card h3 { margin-bottom: 10px; color: var(--primary); }
+        .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .pricing-card {
+            background: var(--card-light);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+        .pricing-card h3 { color: var(--primary); margin-bottom: 10px; }
+        .pricing-card p.price { font-size: 20px; font-weight: bold; margin-top: 10px; }
+        .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .testimonial {
+            background: var(--card-light);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+        }
+        .testimonial p { font-style: italic; }
+        .blog { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .blog-post {
+            background: var(--card-light);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+        }
+        .blog-post h3 { color: var(--primary); margin-bottom: 10px; }
+        .blog-post small { color: #777; }
+        .contact form {
+            display: grid;
+            gap: 15px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .contact-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            max-width: 700px;
+            margin: 25px auto 0;
+        }
+        .contact-option {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+        .contact-option a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        input, textarea {
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 10px 25px rgba(109, 40, 217, 0.2);
+        }
+        button:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        }
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 15px 18px;
+            border-radius: 50%;
+            font-size: 28px;
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+            z-index: 999;
+            transition: 0.3s;
+        }
+        .whatsapp-btn:hover { transform: scale(1.1); }
+        .call-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 15px 18px;
+            border-radius: 50%;
+            font-size: 24px;
+            box-shadow: 0 10px 25px rgba(109, 40, 217, 0.35);
+            z-index: 999;
+            transition: 0.3s;
+        }
+        .call-btn:hover { transform: scale(1.1); }
+        @keyframes bounceTab {
+            0% { transform: translateY(0) scale(1); }
+            35% { transform: translateY(-6px) scale(1.02); }
+            60% { transform: translateY(2px) scale(0.99); }
+            100% { transform: translateY(-4px) scale(1.01); }
+        }
+        @keyframes fadeInPanel {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .dashboard-shell {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-nav {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader"><div></div></div>
+
+    <nav id="navbar">
+        <div><strong>DIGI GROW</strong></div>
+        <div>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#blog">Blog</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <i class="fa-solid fa-moon dark-toggle" id="darkToggle"></i>
+    </nav>
+
+    <header id="home" class="reveal">
+        <div class="hero-shell">
+            <div class="hero-copy">
+                <h1>DIGI GROW SERVICES</h1>
+                <p>Affordable Digital Support for Small Businesses</p>
+                <a href="#contact" class="btn">Get Started</a>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+
+                <div class="floating-card card-growth">
+                    <span>+200%</span>
+                    <small>Growth Focus</small>
+                </div>
+
+                <div class="floating-card card-stats">
+                    <span>24/7</span>
+                    <small>Online Visibility</small>
+                </div>
+
+                <div class="mascot">
+                    <div class="head">
+                        <div class="face">
+                            <div class="eye left"></div>
+                            <div class="eye right"></div>
+                            <div class="smile"></div>
+                        </div>
+                    </div>
+                    <div class="arm left"></div>
+                    <div class="arm right"></div>
+                    <div class="body"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="dashboard" class="reveal">
+        <h2 class="section-title">Dashboard</h2>
+
+        <div class="dashboard-shell">
+            <div class="dashboard-nav" aria-label="Dashboard navigation">
+                <button class="dash-tab active" type="button" data-target="panel-about"><span>About Us</span></button>
+                <button class="dash-tab" type="button" data-target="panel-serve"><span>Who We Serve</span></button>
+                <button class="dash-tab" type="button" data-target="panel-work"><span>How Digi Grow Works</span></button>
+                <button class="dash-tab" type="button" data-target="panel-services"><span>Our Services</span></button>
+                <button class="dash-tab" type="button" data-target="panel-pricing"><span>Pricing Plans</span></button>
+                <button class="dash-tab" type="button" data-target="panel-blog"><span>Blog &amp; Tips</span></button>
+                <button class="dash-tab" type="button" data-target="panel-testimonials"><span>Testimonials</span></button>
+            </div>
+
+            <div class="dashboard-panels">
+                <div id="panel-about" class="dash-panel active about">
+                    <div class="dashboard-visual">
+                        <div class="dashboard-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80" alt="Business team reviewing growth strategy and digital marketing plans">
+                        </div>
+
+                        <div class="dashboard-badge">
+                            <span>Business Growth</span>
+                            <h3>Helping small businesses grow online with confidence.</h3>
+                            <p>
+                                We help brands get more attention, better visibility, and stronger sales with smart digital marketing,
+                                strong creative content, and practical growth strategies.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-serve" class="dash-panel">
+                    <div class="services">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80" alt="Black African small business owner in a modern store">
+                            <h3><i class="fa-solid fa-store"></i> Small Business Owners</h3>
+                            <p>Business owners who need affordable digital support to grow visibility and sales.</p>
+                        </div>
+
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=900&q=80" alt="Black African entrepreneurs planning business growth together">
+                            <h3><i class="fa-solid fa-briefcase"></i> Entrepreneurs</h3>
+                            <p>Entrepreneurs who need simple, effective online promotion without high costs.</p>
+                        </div>
+
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80" alt="Jollof rice and chicken on a Nigerian food platter served for customers">
+                            <h3><i class="fa-solid fa-bowl-food"></i> Food Vendors</h3>
+                            <p>Food sellers who want to showcase menus, offers, and daily specials online.</p>
+                        </div>
+
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80" alt="Black African fashion seller showcasing stylish clothing and promotional content">
+                            <h3><i class="fa-solid fa-shirt"></i> Fashion Business</h3>
+                            <p>Fashion sellers who want attractive promotional content to reach more buyers.</p>
+                        </div>
+
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=900&q=80" alt="Black African hairdresser and barber salon with real clients">
+                            <h3><i class="fa-solid fa-scissors"></i> Hairdressers &amp; Barbers</h3>
+                            <p>Beauty professionals who want more visibility and customer engagement online.</p>
+                        </div>
+
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Black African craft maker displaying handmade crochet products">
+                            <h3><i class="fa-solid fa-hand-holding-heart"></i> Crochet &amp; Handmade Business</h3>
+                            <p>Creative businesses that need help presenting their work beautifully online.</p>
+                        </div>
+
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80" alt="Black African students running a small business successfully">
+                            <h3><i class="fa-solid fa-user-graduate"></i> Students with Small Businesses</h3>
+                            <p>Young entrepreneurs who need simple, affordable digital support to get started.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-work" class="dash-panel">
+                    <div class="services">
+                        <div class="card">
+                            <h3><span style="font-size: 32px; display: block; margin-bottom: 10px;">1️⃣</span> Understand</h3>
+                            <p>We learn about the business, its products and its target customers.</p>
+                        </div>
+
+                        <div class="card">
+                            <h3><span style="font-size: 32px; display: block; margin-bottom: 10px;">2️⃣</span> Create</h3>
+                            <p>We create simple digital materials and content based on the business needs.</p>
+                        </div>
+
+                        <div class="card">
+                            <h3><span style="font-size: 32px; display: block; margin-bottom: 10px;">3️⃣</span> Promote</h3>
+                            <p>We help the business use social media and digital platforms to reach people.</p>
+                        </div>
+
+                        <div class="card">
+                            <h3><span style="font-size: 32px; display: block; margin-bottom: 10px;">4️⃣</span> Grow</h3>
+                            <p>We encourage consistency, customer engagement and better online visibility.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-services" class="dash-panel">
+                    <div class="services">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Black African digital marketing team creating social media content">
+                            <h3><i class="fa-solid fa-share-nodes"></i> Social Media Management</h3>
+                            <p>We handle your Facebook, Instagram, and WhatsApp.</p>
+                            <p><strong>₦10,000/month</strong></p>
+                        </div>
+
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Black African marketing team discussing AI-powered campaign strategy">
+                            <h3><i class="fa-solid fa-robot"></i> AI Ads &amp; Content Creation</h3>
+                            <p>We create ads, posts, and videos using AI.</p>
+                            <p><strong>₦15,000/month</strong></p>
+                        </div>
+
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" alt="Black African business owner designing a website and digital branding strategy">
+                            <h3><i class="fa-solid fa-globe"></i> Website Setup</h3>
+                            <p>We build you a simple business website.</p>
+                            <p><strong>₦25,000 one-time</strong></p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 60px; padding-top: 60px; border-top: 2px solid var(--border-light);">
+                        <h3 style="text-align: center; font-size: 24px; margin-bottom: 15px; color: var(--primary);">Our Complete Service Packages</h3>
+                        <p style="text-align: center; font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; line-height: 1.6;">
+                            Simple, practical digital services designed for small businesses and beginners.
+                        </p>
+
+                        <div class="services">
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=900&q=80" alt="Designer creating colorful promotional flyers on computer">
+                                <h3><i class="fa-solid fa-palette"></i> Simple Flyer Design</h3>
+                                <p>Clear and attractive promotional flyers for products, services, events and offers.</p>
+                                <p><strong>₦5,000 per flyer</strong></p>
+                            </div>
+
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Social media manager writing engaging captions on laptop">
+                                <h3><i class="fa-solid fa-comments"></i> Social Media Captions</h3>
+                                <p>Engaging captions that help businesses communicate with their customers.</p>
+                                <p><strong>₦8,000/month</strong></p>
+                            </div>
+
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" alt="Marketing professional analyzing online promotion strategy on charts">
+                                <h3><i class="fa-solid fa-bullhorn"></i> Basic Online Marketing</h3>
+                                <p>Practical ideas for promoting products and services through social platforms.</p>
+                                <p><strong>₦8,000 per project</strong></p>
+                            </div>
+
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Business analyst researching market trends and opportunities">
+                                <h3><i class="fa-solid fa-magnifying-glass"></i> Business Ideas &amp; Research</h3>
+                                <p>Simple research and ideas that help entrepreneurs make better business decisions.</p>
+                                <p><strong>₦5,000 per project</strong></p>
+                            </div>
+
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1611632736597-de2d4265fba3?auto=format&fit=crop&w=900&q=80" alt="Content creator producing digital media and video content on computer">
+                                <h3><i class="fa-solid fa-pen"></i> Digital Content</h3>
+                                <p>Creating and managing useful digital content for small businesses.</p>
+                                <p><strong>₦10,000 per project</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-pricing" class="dash-panel">
+                    <div class="pricing">
+                        <div class="pricing-card">
+                            <h3>Starter</h3>
+                            <p>Social Media Management for one platform.</p>
+                            <p class="price">₦10,000/month</p>
+                        </div>
+                        <div class="pricing-card">
+                            <h3>Growth</h3>
+                            <p>Full Social Media + AI Content Creation.</p>
+                            <p class="price">₦20,000/month</p>
+                        </div>
+                        <div class="pricing-card">
+                            <h3>Premium</h3>
+                            <p>Website Setup + Growth package.</p>
+                            <p class="price">₦40,000 (first month)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-blog" class="dash-panel">
+                    <div class="blog">
+                        <div class="blog-post">
+                            <h3>3 Ways to Get More Customers Online</h3>
+                            <small>Digital Marketing · Nigeria · Small Business</small>
+                            <p>Learn simple strategies to attract more customers using social media and a basic website.</p>
+                        </div>
+                        <div class="blog-post">
+                            <h3>Why Your Business Needs WhatsApp Marketing</h3>
+                            <small>WhatsApp · Engagement · Sales</small>
+                            <p>WhatsApp is powerful for follow-ups, customer support, and closing more sales.</p>
+                        </div>
+                        <div class="blog-post">
+                            <h3>Using AI to Create Better Content</h3>
+                            <small>AI · Content Creation · Branding</small>
+                            <p>AI tools can help you create consistent, engaging posts without spending all day online.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-testimonials" class="dash-panel">
+                    <div class="testimonials">
+                        <div class="testimonial">
+                            <p>“DIGI GROW helped my fashion business get more customers online. Highly recommended!”</p>
+                            <strong>- Sarah, Ilorin</strong>
+                        </div>
+
+                        <div class="testimonial">
+                            <p>“Their AI content boosted my engagement. Very affordable and effective.”</p>
+                            <strong>- Musa, Abuja</strong>
+                        </div>
+
+                        <div class="testimonial">
+                            <p>“I got a clean website for my bakery. Sales increased within weeks.”</p>
+                            <strong>- Tolu, Lagos</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact reveal">
+        <h2 class="section-title">Contact Us</h2>
+
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="text" placeholder="Business Name" required>
+            <input type="tel" placeholder="Phone Number" required>
+            <textarea rows="5" placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+
+        <div class="contact-options">
+            <div class="contact-option">
+                <h3>WhatsApp 1</h3>
+                <p>07016640922</p>
+                <a href="https://wa.me/2347016640922" target="_blank">Chat on WhatsApp</a>
+            </div>
+            <div class="contact-option">
+                <h3>WhatsApp 2</h3>
+                <p>08024556576</p>
+                <a href="https://wa.me/2348024556576" target="_blank">Chat on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 DIGI GROW SERVICES
+    </footer>
+
+    <a href="https://wa.me/2347016640922" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <a href="tel:+2347016640922" class="call-btn" aria-label="Call 07016640922">
+        <i class="fa-solid fa-phone"></i>
+    </a>
+
+    <script>
+        window.onload = function() {
+            document.getElementById("preloader").style.display = "none";
+        };
+
+        const toggle = document.getElementById("darkToggle");
+        const body = document.body;
+        toggle.onclick = () => {
+            body.classList.toggle("dark");
+            toggle.classList.toggle("fa-sun");
+        };
+
+        const dashboardTabs = document.querySelectorAll(".dash-tab");
+        const dashboardPanels = document.querySelectorAll(".dash-panel");
+        dashboardTabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                const target = tab.getAttribute("data-target");
+                dashboardTabs.forEach((item) => item.classList.remove("active"));
+                dashboardPanels.forEach((panel) => panel.classList.remove("active"));
+                tab.classList.add("active");
+                document.getElementById(target).classList.add("active");
+            });
+        });
+
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+    </script>
+</body>
+</html>
