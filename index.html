@@ -979,12 +979,12 @@
     <section id="contact" class="contact reveal">
         <h2 class="section-title">Contact Us</h2>
 
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="text" placeholder="Business Name" required>
-            <input type="tel" placeholder="Phone Number" required>
-            <textarea rows="5" placeholder="Your Message"></textarea>
-            <button type="submit">Send Message</button>
+        <form id="contactForm">
+            <input id="customerName" type="text" placeholder="Your Name" required>
+            <input id="businessName" type="text" placeholder="Business Name" required>
+            <input id="customerPhone" type="tel" placeholder="Phone Number" required>
+            <textarea id="customerMessage" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message on WhatsApp</button>
         </form>
 
         <div class="contact-options">
@@ -1034,6 +1034,21 @@
                 dashboardPanels.forEach((panel) => panel.classList.remove("active"));
                 tab.classList.add("active");
                 document.getElementById(target).classList.add("active");
+            });
+        });
+
+        document.getElementById("contactForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById("customerName").value.trim();
+            const business = document.getElementById("businessName").value.trim();
+            const phone = document.getElementById("customerPhone").value.trim();
+            const message = document.getElementById("customerMessage").value.trim();
+            const whatsappMessage = `New DIGI GROW enquiry%0A%0AName: ${encodeURIComponent(name)}%0ABusiness: ${encodeURIComponent(business)}%0APhone: ${encodeURIComponent(phone)}%0AMessage: ${encodeURIComponent(message)}`;
+            const whatsappNumbers = ["2347016640922", "2348024556576"];
+
+            whatsappNumbers.forEach((number) => {
+                window.open(`https://wa.me/${number}?text=${whatsappMessage}`, "_blank", "noopener,noreferrer");
             });
         });
 
